@@ -3,9 +3,15 @@ pipeline {
 
     stages {
 
-        stage('Hello') {
+        stage('Maven Test') {
             steps {
-                echo 'DevOps CI/CD Pipeline Started!'
+                sh 'mvn -f application/pom.xml test'
+            }
+        }
+
+        stage('Maven Package') {
+            steps {
+                sh 'mvn -f application/pom.xml clean package'
             }
         }
 
