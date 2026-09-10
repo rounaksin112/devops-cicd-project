@@ -15,5 +15,11 @@ pipeline {
             }
         }
 
+        stage('Docker Build') {
+            steps {
+                sh 'docker build -t devops-cicd-app:1.0 .'
+            }
+        }
+
     }
 }
