@@ -1,3 +1,4 @@
+cat > Jenkinsfile <<'EOF'
 pipeline {
     agent any
 
@@ -17,9 +18,26 @@ pipeline {
 
         stage('Docker Build') {
             steps {
-                sh 'docker build -t devops-cicd-app:1.0 .'
+                sh 'docker build -t rounak123/devops-cicd-app:1.0 .'
+            }
+        }
+
+        stage('Docker Push') {
+            steps {
+                withCredentials([usernamePassword(
+                    credentialsId: 'dockerhub-credentials',
+                    usernameVariable: 'DOCKERHUB_USERNAME',
+                    passwordVariable: 'DOCKERHUB_TOKEN'
+                )]) {
+                    sh '''
+                        echo "$DOCKERHUB_TOKEN" | docker login -u "$DOCKERHUB_USERNAME" --password-stdin
+                        docker push rounak123/devops-cicd-app:1.0
+                        docker logout
+                    '''
+                }
             }
         }
 
     }
 }
+EOF
