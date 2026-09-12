@@ -1,0 +1,29 @@
+---
+- name: Deploy DevOps Application
+  hosts: webserver
+  become: true
+
+  tasks:
+
+    - name: Install Docker
+      apt:
+        name: docker.io
+        state: present
+        update_cache: true
+
+    - name: Ensure Docker is running
+      service:
+        name: docker
+        state: started
+        enabled: true
+
+    - name: Pull application image
+      command: docker pull rounak123/devops-cicd-app:1.0
+
+    - name: Remove old application container
+      command: docker rm -f devops-app
+      ignore_errors: true
+
+    - name: Start application container
+      command: docker run -d --name devops-app
+-p 8080:8080 rounak123/devops-cicd-app:1.0

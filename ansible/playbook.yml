@@ -1,0 +1,21 @@
+---
+- name: Configure Web Server
+  hosts: webserver
+  become: true
+
+  vars_files:
+    - vars.yml
+
+  tasks:
+
+    - name: Install Web Package
+      apt:
+        name: "{{ web_package }}"
+        state: present
+        update_cache: true
+
+    - name: Ensure Nginx is running
+      service:
+        name: nginx
+        state: started
+        enabled: true
