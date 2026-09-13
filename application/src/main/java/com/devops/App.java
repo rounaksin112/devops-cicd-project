@@ -30,7 +30,7 @@ public class App {
         server.start();
 
         System.out.println(
-                "DevOps application started on port 8080"
+                "DevOps application started on port 8081"
         );
     }
 }
