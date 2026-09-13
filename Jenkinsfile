@@ -37,5 +37,13 @@ pipeline {
             }
         }
 
+        stage('Deploy to Kubernetes') {
+            steps {
+                sh 'kubectl apply -f kubernetes/deployment.yaml'
+                sh 'kubectl apply -f kubernetes/service.yaml'
+                sh 'kubectl rollout status deployment/devops-app --timeout=120s'
+            }
+        }
+
     }
 }
