@@ -1,0 +1,14 @@
+aws_region   = "ap-south-1"
+project_name = "devops-cicd-project"
+
+security_groups = {
+  application = {
+    description = "Application traffic"
+    port        = 8081
+  }
+
+  monitoring = {
+    description = "Monitoring traffic"
+    port        = 9090
+  }
+}
